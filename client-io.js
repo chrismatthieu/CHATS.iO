@@ -17,7 +17,7 @@ if(room == "") room = "main";
 
 io.setPath('/libs/socket.io.client/');
 // var socket = new io.Socket(null, {rememberTransport: false, port: 8764}); 
-var socket = new io.Socket(null, {port: 8764}); 
+var socket = new io.Socket(null, {port: 80}); 
 socket.connect();
 
 socket.on('message', function(message){
