@@ -1,6 +1,6 @@
 // node server-io.js
 var http = require("http"),
-  // io = require('./libs/socket-io-node'),
+  io = require('./libs/socket-io-node'),
   // io = require('./libs/socket-io-node/index'),
   sys = require("sys"),
   fs = require("fs"),
@@ -10,8 +10,8 @@ var http = require("http"),
   ignore_uniq = false,
   allowed_domains = ["chat.solisoft.net:8764", "localhost:8764", "10.0.1.6:8764"];
 
-require.paths.push(__dirname + '/libs/socket-io-node');
-var io = require('./libs/socket-io-node');
+// require.paths.push(__dirname + '/libs/socket-io-node');
+// var io = require('./libs/socket-io-node');
 
 var send404 = function(res) {
   res.writeHead(404);
@@ -118,18 +118,18 @@ socket.on("connection", function(client){
 
   sys.puts("<"+client.sessionId+"> connected");
   
-  // client.on("disconnect", function() {
-  // 	console.log('disconnect detected');
-  // 	
-  //   var u_rooms = [];
-  //   if(nicks[client.sessionId.toString()] != undefined) u_rooms = nicks[client.sessionId.toString()]["rooms"];
-  //   sys.puts("<"+client.sessionId+"> disconnected");
-  //   for(var room in u_rooms) {
-  //     broadCast(client, u_rooms[room], "/quit " + client.sessionId); 
-  //   }
-  //   nicks[client.sessionId.toString()] = undefined;
-  //  
-  // });
+  client.on("disconnect", function() {
+  	console.log('disconnect detected');
+	
+    var u_rooms = [];
+    if(nicks[client.sessionId.toString()] != undefined) u_rooms = nicks[client.sessionId.toString()]["rooms"];
+    sys.puts("<"+client.sessionId+"> disconnected");
+    for(var room in u_rooms) {
+      broadCast(client, u_rooms[room], "/quit " + client.sessionId); 
+    }
+    nicks[client.sessionId.toString()] = undefined;
+ 
+  });
   
   client.on("message", function(message) {
   	console.log('message detected');
