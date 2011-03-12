@@ -118,18 +118,18 @@ socket.on("connection", function(client){
 
   sys.puts("<"+client.sessionId+"> connected");
   
-  client.on("disconnect", function() {
-  	console.log('disconnect detected');
-	
-    var u_rooms = [];
-    if(nicks[client.sessionId.toString()] != undefined) u_rooms = nicks[client.sessionId.toString()]["rooms"];
-    sys.puts("<"+client.sessionId+"> disconnected");
-    for(var room in u_rooms) {
-      broadCast(client, u_rooms[room], "/quit " + client.sessionId); 
-    }
-    nicks[client.sessionId.toString()] = undefined;
- 
-  });
+  // client.on("disconnect", function() {
+  // 	console.log('disconnect detected');
+  // 	
+  //   var u_rooms = [];
+  //   if(nicks[client.sessionId.toString()] != undefined) u_rooms = nicks[client.sessionId.toString()]["rooms"];
+  //   sys.puts("<"+client.sessionId+"> disconnected");
+  //   for(var room in u_rooms) {
+  //     broadCast(client, u_rooms[room], "/quit " + client.sessionId); 
+  //   }
+  //   nicks[client.sessionId.toString()] = undefined;
+  //  
+  // });
   
   client.on("message", function(message) {
   	console.log('message detected');
