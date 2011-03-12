@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>CHATS.iO</title>
+    <script src="/public/js/jquery-1.4.2.min.js"></script>
+    <script src="/public/js/underscore-min.js"></script>
+    <script src="/libs/socket.io.client/socket.io.js"></script> 
+    <script src="/client-io.js"></script>
+    <link rel="stylesheet" type="text/css" href="/client-io.css">
+  </head>
+  <body>
+    <div class="help">
+        CHATS.iO<em>/your_own_chatroom_name</em><br/>
+		<b>CHATS.iO is the social chat! You can create your own chatroom by adding it to the address bar i.e. http://chats.io/party</b>        
+    </div>
+	
+	
+    <audio id="audio_new_pm" src="/audio/new_pm.wav" preload="auto"></audio>
+    <audio id="audio_msg" src="/audio/sound.wav" preload="auto"></audio>
+
+    <div id="rooms"><ul></ul> &nbsp; <b>chatrooms and commands: /nick your_nick,  /join a_new_room,  /part</b></div>
+	
+  </body>
+</html>

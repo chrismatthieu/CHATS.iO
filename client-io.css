@@ -1,0 +1,149 @@
+body {
+  background: #EEEEEE;
+  font-family: "monospace", Helvetica, Arial, sans-serif;
+  padding: 0; margin: 0;
+}
+
+a img {
+  border: none !important; }
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  -webkit-transition-property: opacity, -webkit-transform, color, background-color, padding, -webkit-box-shadow;
+  -webkit-transition-duration: 0.15s;
+  -webkit-transition-timing-function: ease-out; }
+  a:hover { opacity: 0.8; }
+#ribbon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2; }
+
+
+
+#room {
+  position: absolute;
+  top: 150px;
+}
+#room, #users {
+  line-height: 30px;
+  color: #9F9686;
+}
+.chat {
+  position: absolute;
+  bottom: 80px;
+  left: 10px;
+  top: 190px;
+  right: 290px;
+  overflow-y: auto;
+/*  color: white;*/
+  color: #440066;
+  padding: 10px;
+/*  background: #1B1D20;*/
+  background:rgba(255, 255, 255, 0.699219);
+  border: 5px solid #440066;
+  word-wrap: break-word;  
+}
+.chat .from {        
+  font-weight: bold;
+  color: lightSteelBlue;
+  border-bottom: 1px solid #7F8794;
+  margin-top: 5px;
+}
+.chat .from .date {
+  float: right;
+  font-size: 0,9em;
+  font-weight: normal;
+}
+
+input[type=submit] {
+  display: none;
+}
+.room form input[type=text]{
+	padding:5px 10px;
+	color:#666666;
+	background-color:#F7F7F7;
+	border:1px solid #CCCCCC;
+	position: absolute;
+  bottom: 40px;
+  left: 10px;
+  right: 290px;
+  font-size: 20px;
+  line-height: 25px;
+  background: #fff;       
+/*  width: 65%;*/
+	}
+
+.nicks {
+  position: absolute;
+  top: 190px;
+  bottom: 0;
+  right: 0;
+  width: 250px;
+  color: white;
+}
+#rooms {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+}
+#rooms ul {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+#rooms ul li {
+  float: left;
+  list-style: none;
+  margin: 0 3px;
+  padding: 0px 20px;
+  line-height: 30px;
+  background: #3F3B32;
+  cursor: pointer;
+}
+#rooms ul li.active {
+  background: #9F998D;
+}
+.help {
+  background: #440066;
+  padding: 15px;
+  color:white;
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 40px;
+  text-align: center;
+  padding: 40px 0 30px;
+  margin: 0;
+}
+em {
+  color:rgba(255, 255, 255, 0.699219);
+  font-style:normal;
+}
+.help b {
+  color:rgba(255, 255, 255, 0.699219);
+  font-size: 18px;
+}
+
+b {
+  color: #9F998D;
+  font-size: 18px;
+}
+
+#rooms ul li.pm {
+  background: #440066;
+}
+#rooms ul li.pm.active {
+  background: purple;
+}
+.nicks {
+  color: lightSteelBlue;
+}
+.nicks a {
+  color: #440066;
+}
+.notice {
+  color: lightSteelBlue;
+}
