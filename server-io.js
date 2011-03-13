@@ -1,13 +1,14 @@
 // node server-io.js
 var http = require("http"),
-  io = require('./libs/socket-io-node'),
+  io = require('./socket.io'),
+  // io = require('socket.io'),
   sys = require("sys"),
   fs = require("fs"),
   url = require('url'),
   nicks = {},
   rooms = {},
   ignore_uniq = false,
-  allowed_domains = ["chat.solisoft.net:8764", "localhost:8764", "10.0.1.6:8764"];
+  allowed_domains = ["chats.nodester.com", "localhost:8764", "10.0.1.6:8764"];
 
 var send404 = function(res) {
   res.writeHead(404);
@@ -42,7 +43,7 @@ function broadCast(client, room, msg) {
   for(key in nicks) {
     try {
       if(nicks[key] && nicks[key]["rooms"] && nicks[key]["rooms"].indexOf(room) >= 0) {
-        console.log(key + ">" + msg);
+        console.log('key:' + key + ">" + msg);
         var n = "";
         if(nicks[client.sessionId]) n = nicks[client.sessionId]["nick"];
         client.send_to(key, json({ msg: HTMLEncode(msg), room: HTMLEncode(room), from: HTMLEncode(n) }));      
@@ -107,6 +108,9 @@ var httpServer = http.createServer(function(req, res) {
 });
 
 httpServer.listen(8764); 
+
+// var socket = io.listen(httpServer)
+//  , buffer = [];
 
 var socket = io.listen(httpServer);
 

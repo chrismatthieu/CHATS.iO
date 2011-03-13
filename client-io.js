@@ -2,11 +2,9 @@ var conn_id = null;
 var debug = true;
 var nick = "";
 var room = "main";
-// var room = chatroom;
 var rooms = {};
 
 var nick=prompt("Please enter your name","");
-
 
 var path = location.pathname.replace( "/", "" );
 if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
@@ -14,10 +12,7 @@ if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 }
 if(room == "") room = "main";
 
-
-io.setPath('/libs/socket.io.client/');
-// var socket = new io.Socket(null, {rememberTransport: false, port: 8764}); 
-var socket = new io.Socket(null, {port: 8764}); 
+var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
 socket.connect();
 
 socket.on('message', function(message){
