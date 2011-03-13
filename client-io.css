@@ -109,13 +109,14 @@ input[type=submit] {
   background: #9F998D;
 }
 .help {
+/*  background: #440066 url('/public/bubblepurple.png') repeat right top;*/
   background: #440066;
   padding: 15px;
   color:white;
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 40px;
   text-align: center;
-  padding: 40px 0 30px;
+  padding: 40px 0 15px;
   margin: 0;
 }
 em {

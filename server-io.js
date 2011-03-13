@@ -1,7 +1,6 @@
 // node server-io.js
 var http = require("http"),
   io = require('./libs/socket-io-node'),
-  // io = require('./libs/socket-io-node/index'),
   sys = require("sys"),
   fs = require("fs"),
   url = require('url'),
@@ -9,9 +8,6 @@ var http = require("http"),
   rooms = {},
   ignore_uniq = false,
   allowed_domains = ["chat.solisoft.net:8764", "localhost:8764", "10.0.1.6:8764"];
-
-// require.paths.push(__dirname + '/libs/socket-io-node');
-// var io = require('./libs/socket-io-node');
 
 var send404 = function(res) {
   res.writeHead(404);
@@ -142,7 +138,6 @@ socket.on("connection", function(client){
     console.log(message);
     if(allowed) {
       var msg = message.split(" ");
-      // console.log(msg);
 	  console.log('msg:' + msg);
 
       switch (msg[0]) { 
