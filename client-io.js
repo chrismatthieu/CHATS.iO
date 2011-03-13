@@ -4,7 +4,7 @@ var nick = "";
 var room = "main";
 var rooms = {};
 
-var nick=prompt("Please enter your name","");
+var nick=prompt("Please enter your name",""); 
 
 var path = location.pathname.replace( "/", "" );
 if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
