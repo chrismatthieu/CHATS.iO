@@ -35,23 +35,23 @@ function sendNicksList(client, room) {
   for(key in nicks) {
     try {
       if(nicks[key] && nicks[key]["rooms"] && nicks[key]["rooms"].indexOf(room) >= 0) n.push(key + ":" + nicks[key]["nick"]);
-    } catch(e) { sys.puts(e); } 
+    } catch(e) { console.log(e); } 
   } 
   broadCast(client, room, "/list " + n.join(","));
 }
 
 function broadCast(client, room, msg) {  
   var n = [];
-  sys.puts(room);
+  console.log(room);
   for(key in nicks) {
     try {
       if(nicks[key] && nicks[key]["rooms"] && nicks[key]["rooms"].indexOf(room) >= 0) {
-        sys.puts(key + ">" + msg);
+        console.log(key + ">" + msg);
         var n = "";
         if(nicks[client.sessionId]) n = nicks[client.sessionId]["nick"];
         client.send_to(key, json({ msg: HTMLEncode(msg), room: HTMLEncode(room), from: HTMLEncode(n) }));      
       }
-    } catch(e) { sys.puts(e); }
+    } catch(e) { console.log(e); }
   }  
 }
 
@@ -116,14 +116,14 @@ var socket = io.listen(httpServer);
 
 socket.on("connection", function(client){
 
-  sys.puts("<"+client.sessionId+"> connected");
+  console.log("<"+client.sessionId+"> connected");
   
   client.on("disconnect", function() {
   	console.log('disconnect detected');
 	
     var u_rooms = [];
     if(nicks[client.sessionId.toString()] != undefined) u_rooms = nicks[client.sessionId.toString()]["rooms"];
-    sys.puts("<"+client.sessionId+"> disconnected");
+    console.log("<"+client.sessionId+"> disconnected");
     for(var room in u_rooms) {
       broadCast(client, u_rooms[room], "/quit " + client.sessionId); 
     }
@@ -139,10 +139,10 @@ socket.on("connection", function(client){
     //   
     //   if(allowed_domains[domain] == client.request.headers.host) allowed = true;
     // }
-    sys.puts(message);
+    console.log(message);
     if(allowed) {
       var msg = message.split(" ");
-      sys.puts(msg);
+      // console.log(msg);
 	  console.log('msg:' + msg);
 
       switch (msg[0]) { 
@@ -175,7 +175,7 @@ socket.on("connection", function(client){
           try {  
             client.send_to(msg[1], json({ msg: HTMLEncode("/msg " + msg.slice(2).join(" ")), room: HTMLEncode("/pm"), from: HTMLEncode(client.sessionId), name: HTMLEncode(nicks[client.sessionId]["nick"]), toname: HTMLEncode(nicks[client.sessionId]["nick"]) }));
             client.send_to(client.sessionId, json({ msg: HTMLEncode("/msg " + msg.slice(2).join(" ")), room: HTMLEncode("/pm"), from: HTMLEncode(client.sessionId), name: HTMLEncode(nicks[msg[1]]["nick"]), to: msg[1], toname: HTMLEncode(nicks[client.sessionId]["nick"]) }));
-          } catch(e) { sys.puts(e); }
+          } catch(e) { console.log(e); }
           break;
         case "/part":
           var pos = nicks[client.sessionId]["rooms"].indexOf(msg.slice(1).join(" "));        
