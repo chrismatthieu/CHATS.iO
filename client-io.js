@@ -12,8 +12,9 @@ if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 }
 if(room == "") room = "main";
 
-// var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
-var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
+// var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+
 socket.connect();
 
 socket.on('message', function(message){
@@ -31,9 +32,9 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
       
 	  // nick=prompt("Please enter your name","");
       if(nick == ""){
-		nick = "Guest " + conn_id;
+		nick = "Guest_";
 	  } 
-		socket.send("/nick " + nick); 
+		socket.send("/nick " + nick + "_" + conn_id); 
 
       break;
     

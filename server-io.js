@@ -1,7 +1,6 @@
 // node server-io.js
 var http = require("http"),
   io = require('./socket.io'),
-  // io = require('socket.io'),
   sys = require("sys"),
   fs = require("fs"),
   url = require('url'),
@@ -66,8 +65,6 @@ var httpServer = http.createServer(function(req, res) {
   } else {
     var path = url.parse(req.url).pathname;
 
-    // if(path == "/") path = "/client-io.html";
-
     if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 		path = "/client-io.html";
 	}
@@ -108,9 +105,6 @@ var httpServer = http.createServer(function(req, res) {
 });
 
 httpServer.listen(8764); 
-
-// var socket = io.listen(httpServer)
-//  , buffer = [];
 
 var socket = io.listen(httpServer);
 
