@@ -10,7 +10,7 @@ a img {
 a {
   font-weight: bold;
   text-decoration: none;
-  color: white;
+  color: violet;
   -webkit-transition-property: opacity, -webkit-transform, color, background-color, padding, -webkit-box-shadow;
   -webkit-transition-duration: 0.15s;
   -webkit-transition-timing-function: ease-out; }
@@ -82,7 +82,7 @@ input[type=submit] {
   bottom: 0;
   right: 0;
   width: 250px;
-  color: white;
+  color: black;
 }
 #rooms {
   position: absolute;
@@ -94,7 +94,7 @@ input[type=submit] {
 #rooms ul {
   margin: 0;
   padding: 0;
-  color: white;
+  color: black;
 }
 #rooms ul li {
   float: left;
@@ -143,7 +143,7 @@ b {
   color: lightSteelBlue;
 }
 .nicks a {
-  color: #440066;
+  color: violet;
 }
 .notice {
   color: lightSteelBlue;

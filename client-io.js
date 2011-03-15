@@ -30,9 +30,8 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
     case "/hello":
       conn_id = data[1];
       
-	  // nick=prompt("Please enter your name","");
       if(nick == ""){
-		nick = "Guest_";
+		nick = "guest";
 	  } 
 		socket.send("/nick " + nick + "_" + conn_id); 
 
@@ -49,8 +48,9 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
             rooms[id]["nb"] = 0;
             rooms[id]["type"] = "pm";
             rooms[id]["to"] = message.name;
+			var fname = message.name.split("_")[0];
             try { $("#audio_new_pm")[0].play(); } catch(e) {}            
-            $('#rooms ul:first-child').append("<li class='pm' id='r_" + id + "'>@" + message.name + "</li>");
+            $('#rooms ul:first-child').append("<li class='pm' id='r_" + id + "'>@" + fname + "</li>");
             addNewRoom(id);
             room = id;
           }
@@ -62,16 +62,19 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
                 min   = date.getMinutes();
               if(min < 10) min = "0" + min;
               rooms[id]["last_user"] = message.toname;
-              $('#chat_' + id).append("<div class='from'><div class='date'>"+hour+":"+min+"</div>" + message.toname + "</div>");
+			  var fname = message.toname.split("_")[0];
+              $('#chat_' + id).append("<div class='from'><div class='date'>"+hour+":"+min+"</div>" + fname + "</div>");
             }
            
             $('#chat_' + id).append("<div>" + HTMLEncode(text) + "</div>");
             scrollChat();
+			var fname = message.name.split("_")[0];
+
             if(room != id) {
               rooms[id]["nb"]++;
-              $("#r_" + id).html("@" + message.name + " (" + rooms[id]["nb"] + ")");
+              $("#r_" + id).html("@" + fname + " (" + rooms[id]["nb"] + ")");
             } else {
-              $("#r_" + id).html("@" + message.name);
+              $("#r_" + id).html("@" + fname);
             }
           }
         }
@@ -85,9 +88,23 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
           if(min < 10) min = "0" + min;
                 
           rooms[message.room]["last_user"] = message.from;
-          $('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div>" + message.from + "</div>");
+		  var fname = message.from.split("_")[0];
+		  var lname = message.from.split("_")[1];
+		
+		if(nick == message.from) 
+			$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div>" + fname + "</div>");
+		else
+          	$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div><a href='#' onclick='socket.send(\"/pm "+ lname+"\")'>" + fname + "</a></div>");
+
+
         }
-        $('#chat_' + message.room).append("<div>" + HTMLEncode(data.slice(1).join(" ")) + "</div>");
+
+		var msgtext = HTMLEncode(data.slice(1).join(" "))
+		var msgtextlinks = msgtext.replace(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/, "<a href='$1://$3' target='blank'>$1://$3</a>");
+
+
+        $('#chat_' + message.room).append("<div>" + msgtextlinks + "</div>");
+        // $('#chat_' + message.room).append("<div>" + HTMLEncode(data.slice(1).join(" ")) + "</div>");
         scrollChat();
         if(room != message.room) {
           rooms[message.room]["nb"]++;
@@ -115,9 +132,11 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
         $('#room').html("Connected on room #" + room);
         $('#rooms ul:first-child').append("<li id='r_" + room + "'>" + room + "</li>");
         addNewRoom(room);
-        $('#chat_' + room).append("<div class='notice'>:: You are connected as " + nick + "</div>");
+		var fname = nick.split("_")[0];
+        $('#chat_' + room).append("<div class='notice'>:: You are connected as " + fname + "</div>");
       } else {
-        $('#chat_' + room).append("<div class='notice'>:: " + message.from + " joined this room</div>");
+		var fname = message.from.split("_")[0];
+        $('#chat_' + room).append("<div class='notice'>:: " + fname + " joined this room</div>");
       }
       refreshList(room);
       
@@ -128,14 +147,15 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
         n = data.split(":");
         var nh = "#n_" + room + "_" + n[0];
         var value = n[1];
+		var fname = value.split("_")[0];
         
         if($(nh).html() == null) {
           if(n[1] == "undefined" || n[1] == undefined) value = n[0];
-          if(n[0] == conn_id) $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'>" + value +"</div>");
-          else $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'><a href='#' onclick='socket.send(\"/pm "+ n[0]+"\")'>" + value +"</a></div>");
+          if(n[0] == conn_id) $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'>" + fname +"</div>");
+          else $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'><a href='#' onclick='socket.send(\"/pm "+ n[0]+"\")'>" + fname +"</a></div>");
         } else {
-          $(nh + " a").html(value);
-          $("#r_" + n[0]).html("@" + value);
+          $(nh + " a").html(fname);
+          $("#r_" + n[0]).html("@" + fname);
         }
         
       });
@@ -143,12 +163,14 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
       
     case "/quit":
       $("#n_" + msg_room + "_" + data[1]).detach();
-      $('#chat_' + msg_room).append("<div class='notice'>:: " + message.from + " left the room</div>");
+	  var fname = message.from.split("_")[0];
+      $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
       break;
     
     case "/part":
       $("#n_" + msg_room + "_" + data[1]).detach();
-      $('#chat_' + msg_room).append("<div class='notice'>:: " + message.from + " left the room</div>");
+	  var fname = message.from.split("_")[0];
+      $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
       break;
   
     case "/writing":
@@ -242,7 +264,8 @@ function displayRoom(r) {
   $("#rooms ul li").removeClass("active");
   $('#r_' + r).addClass("active");
   if(rooms[r]["type"] == "pm") {
-    $('#r_' + r).html("@" + rooms[r]["to"]);
+	var fname = rooms[r]["to"].split("_")[0];
+    $('#r_' + r).html("@" + fname);
   } else {
     $('#r_' + r).html(r);
   }  
