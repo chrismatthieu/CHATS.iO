@@ -265,9 +265,11 @@ function displayRoom(r) {
   $('#r_' + r).addClass("active");
   if(rooms[r]["type"] == "pm") {
 	var fname = rooms[r]["to"].split("_")[0];
-    $('#r_' + r).html("@" + fname);
+   	$('#r_' + r).html("@" + fname);
   } else {
-    $('#r_' + r).html(r);
+	if(room.length != 16 && !IsNumeric(room)){
+   		$('#r_' + r).html(r);
+	}
   }  
   $('#n_' + r).html("");
   
@@ -294,4 +296,16 @@ function addNewRoom(r) {
   $("#rooms ul li").removeClass("active");
   $('#r_' + r).addClass("active");
   $('#room_' + r).css("display", "block");
+}
+
+socket.on('reconnect', function(){ 
+	socket.send("/whoami");
+});
+
+// socket.on('reconnecting', function( nextRetry ){ message({ message: ['System', 'Attempting to re-connect to the server, next attempt in ' + nextRetry + 'ms']})});
+// socket.on('reconnect_failed', function(){ message({ message: ['System', 'Reconnected to server FAILED.']})});
+
+function IsNumeric(input)
+{
+   return (input - 0) == input && input.length > 0;
 }
