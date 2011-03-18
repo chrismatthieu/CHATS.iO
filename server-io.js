@@ -170,11 +170,11 @@ socket.on("connection", function(client){
             client.send_to(client.sessionId, json({ msg: HTMLEncode("/msg " + msg.slice(2).join(" ")), room: HTMLEncode("/pm"), from: HTMLEncode(client.sessionId), name: HTMLEncode(nicks[msg[1]]["nick"]), to: msg[1], toname: HTMLEncode(nicks[client.sessionId]["nick"]) }));
           } catch(e) { console.log(e); }
           break;
-        case "/part":
+        case "/leave":
           var pos = nicks[client.sessionId]["rooms"].indexOf(msg.slice(1).join(" "));        
           if(pos >= 0) nicks[client.sessionId]["rooms"].splice(pos,1);
           sendNicksList(client, msg.slice(1).join(" "));
-          broadCast(client, msg.slice(1).join(" "), "/part " + client.sessionId);
+          broadCast(client, msg.slice(1).join(" "), "/leave " + client.sessionId);
           break;
         case "/sessionId":
           ignore_uniq = true;

@@ -167,7 +167,7 @@ console.log(data[0] + '-' + data[1] + '-' + data[2]);
       $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
       break;
     
-    case "/part":
+    case "/leave":
       $("#n_" + msg_room + "_" + data[1]).detach();
 	  var fname = message.from.split("_")[0];
       $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
@@ -201,7 +201,7 @@ function send(msg) {
         msg = "/join " + room;
         can_send = nick == "" ? false : true;
         break;
-      case "/part":
+      case "/leave":
         msg = msg + " " + room;
         rooms[room] = undefined;
         $('#r_' + room).detach();
