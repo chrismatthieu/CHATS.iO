@@ -190,6 +190,11 @@ socket.on('connect', function(){
   socket.send("/whoami");
 });
 
+socket.on('disconnect', function(){
+  notice(null, "You have been disconnected");
+});
+
+
 function send(msg) {
   var r = room;
   if(msg[0] == "/") {
@@ -233,8 +238,17 @@ function send(msg) {
 }
 
 function notice(room, msg) {
-  $('#chat_' + room).append("<div class='notice'>:: " + msg + "</div>");
-  scrollChat();
+  if (room) {
+    $('#chat_' + room).append("<div class='notice'>:: " + msg + "</div>");
+    scrollChat();
+  }
+  else {
+    $('.chat').each(function() {
+      var chat = $(this);
+      chat.append("<div class='notice'>:: " + msg + "</div>");
+      chat.scrollTop(chat.scrollHeight + chat.height());
+    });
+  }
 }
 
 function scrollChat() {
