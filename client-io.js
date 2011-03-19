@@ -21,7 +21,7 @@ socket.on('message', function(message){
   message = JSON.parse(message);
   var data = message.msg.split(" ");
 
-console.log(data[0] + '-' + data[1] + '-' + data[2]);
+// console.log(data[0] + '-' + data[1] + '-' + data[2]);
   
   var msg_room = "";
   if(message.room) msg_room = message.room;
