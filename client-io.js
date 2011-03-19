@@ -12,8 +12,8 @@ if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 }
 if(room == "") room = "main";
 
-var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
-// var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+// var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
+var socket = new io.Socket(null, {port: 80, rememberTransport: false});
 
 socket.connect();
 
