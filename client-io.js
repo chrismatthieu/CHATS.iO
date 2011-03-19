@@ -6,6 +6,9 @@ var rooms = {};
 
 var nick=prompt("Please enter your name",""); 
 
+var batches = {};
+
+
 var path = location.pathname.replace( "/", "" );
 if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 	room = path;
@@ -136,7 +139,9 @@ socket.on('message', function(message){
         notice(room, "You are connected as " + fname);
       } else {
 		var fname = message.from.split("_")[0];
-        notice(room, fname + " joined this room");
+        batch('join_' + room, fname, function(names) {
+          notice(msg_room, names + " joined this room");
+        });
       }
       refreshList(room);
       
@@ -164,13 +169,17 @@ socket.on('message', function(message){
     case "/quit":
       $("#n_" + msg_room + "_" + data[1]).detach();
 	  var fname = message.from.split("_")[0];
-      notice(msg_room, fname + " left the room");
+      batch('part_' + msg_room, fname, function(names) {
+        notice(msg_room, names + " left the room");
+      });
       break;
     
     case "/leave":
       $("#n_" + msg_room + "_" + data[1]).detach();
 	  var fname = message.from.split("_")[0];
-      notice(msg_room, fname + " left the room");
+      batch('part_' + msg_room, fname, function(names) {
+        notice(msg_room, names + " left the room");
+      });
       break;
   
     case "/writing":
@@ -235,6 +244,28 @@ function send(msg) {
     }
   }
   $('#t_' + r).val("");
+}
+
+function batch(type, name, callback) {
+  batches[type] || (batches[type] = {names: []});
+  var names = batches[type].names;
+  names.push(name);
+  
+  if (!batches[type].timer) {
+    batches[type].timer = window.setTimeout(function() {
+      var nameStr;
+      if (names.length > 1) {
+         nameStr = names.slice(0, -1).join(', ') + ' and ' + names.slice(-1);
+      }
+      else {
+        nameStr = names[0];
+      }
+
+      delete batches[type].timer;
+      batches[type].names = [];
+      callback(nameStr);
+    }, 500);
+  }
 }
 
 function notice(room, msg) {
