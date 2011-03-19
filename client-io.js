@@ -133,12 +133,11 @@ socket.on('message', function(message){
         $('#rooms ul:first-child').append("<li id='r_" + room + "'>" + room + "</li>");
         addNewRoom(room);
 		var fname = nick.split("_")[0];
-        $('#chat_' + room).append("<div class='notice'>:: You are connected as " + fname + "</div>");
+        notice(room, "You are connected as " + fname);
       } else {
 		var fname = message.from.split("_")[0];
-        $('#chat_' + room).append("<div class='notice'>:: " + fname + " joined this room</div>");
+        notice(room, fname + " joined this room");
       }
-      scrollChat();
       refreshList(room);
       
       break;
@@ -165,15 +164,13 @@ socket.on('message', function(message){
     case "/quit":
       $("#n_" + msg_room + "_" + data[1]).detach();
 	  var fname = message.from.split("_")[0];
-      $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
-      scrollChat();
+      notice(msg_room, fname + " left the room");
       break;
     
     case "/leave":
       $("#n_" + msg_room + "_" + data[1]).detach();
 	  var fname = message.from.split("_")[0];
-      $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
-      scrollChat();
+      notice(msg_room, fname + " left the room");
       break;
   
     case "/writing":
@@ -181,8 +178,7 @@ socket.on('message', function(message){
       break;
     
     case "/notice":
-      $('#chat_' +room).append("<div class='notice'>:: " + data.slice(1).join(" ") + " </div>");
-      scrollChat();
+      notice(msg_room, data.slice(1).join(" "));
       break;
     
     default:
@@ -234,6 +230,11 @@ function send(msg) {
     }
   }
   $('#t_' + r).val("");
+}
+
+function notice(room, msg) {
+  $('#chat_' + room).append("<div class='notice'>:: " + msg + "</div>");
+  scrollChat();
 }
 
 function scrollChat() {
