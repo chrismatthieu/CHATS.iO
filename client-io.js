@@ -264,7 +264,7 @@ function batch(type, name, callback) {
       delete batches[type].timer;
       batches[type].names = [];
       callback(nameStr);
-    }, 500);
+    }, 1000);
   }
 }
 
