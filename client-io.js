@@ -138,6 +138,7 @@ socket.on('message', function(message){
 		var fname = message.from.split("_")[0];
         $('#chat_' + room).append("<div class='notice'>:: " + fname + " joined this room</div>");
       }
+      scrollChat();
       refreshList(room);
       
       break;
@@ -165,12 +166,14 @@ socket.on('message', function(message){
       $("#n_" + msg_room + "_" + data[1]).detach();
 	  var fname = message.from.split("_")[0];
       $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
+      scrollChat();
       break;
     
     case "/leave":
       $("#n_" + msg_room + "_" + data[1]).detach();
 	  var fname = message.from.split("_")[0];
       $('#chat_' + msg_room).append("<div class='notice'>:: " + fname + " left the room</div>");
+      scrollChat();
       break;
   
     case "/writing":
@@ -179,6 +182,7 @@ socket.on('message', function(message){
     
     case "/notice":
       $('#chat_' +room).append("<div class='notice'>:: " + data.slice(1).join(" ") + " </div>");
+      scrollChat();
       break;
     
     default:
