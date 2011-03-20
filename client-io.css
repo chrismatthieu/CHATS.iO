@@ -120,19 +120,31 @@ input[type=submit] {
   padding: 15px;
   color:white;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 32px;
+  font-size: 18px;
   text-align: left;
   padding: 5px 10px;
   margin: 0;
   line-height: 32px;
+
+
+
+}
+.help span {
+  font-family: 'Lobster', Helvetica, Arial, sans-serif;
+  font-size:32px;
+  text-shadow:#110044 0 -1px 1px, #EEDDFF 0 1px 1px;
 }
 .help img {
   position: relative;
   top: 5px;
   left: 0;
 }
-em {
+/*em {
   color:rgba(255, 255, 255, 0.699219);
+  font-style:normal;
+}*/
+.help em {
+  color:#a9c;
   font-style:normal;
 }
 .help b {
