@@ -311,9 +311,13 @@ function HTMLEncode(wText){
   wText=wText.replace(/:-\)/g, '<img src="/public/happy.gif">') ;
   wText=wText.replace(/:\(/g, '<img src="/public/sad.gif">') ;
   wText=wText.replace(/:-\(/g, '<img src="/public/sad.gif">') ;
+  wText=wText.replace(/:'\(/g, '<img src="/public/sad.gif">') ;
   wText=wText.replace(/:D/g, '<img src="/public/awesome.gif">') ;
   wText=wText.replace(/:P/g, '<img src="/public/tongue.gif">') ;
   wText=wText.replace(/:p/g, '<img src="/public/tongue.gif">') ;
+  wText=wText.replace(/;\)/g, '<img src="/public/wink.gif">') ;
+  wText=wText.replace(/;-\)/g, '<img src="/public/wink.gif">') ;
+  wText=wText.replace(/;\//g, '<img src="/public/wink.gif">') ;
 	
 
   return wText;
