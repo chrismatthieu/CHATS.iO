@@ -8,13 +8,12 @@ a img {
   border: none !important; }
 
 a {
-  font-weight: bold;
   text-decoration: none;
-  color: violet;
-  -webkit-transition-property: opacity, -webkit-transform, color, background-color, padding, -webkit-box-shadow;
-  -webkit-transition-duration: 0.15s;
-  -webkit-transition-timing-function: ease-out; }
-  a:hover { opacity: 0.8; }
+  color: #a9c;
+ }
+
+a:hover { opacity: 0.8; }
+
 #ribbon {
   position: fixed;
   top: 0;
@@ -49,7 +48,7 @@ a {
   word-wrap: break-word;  
 }
 .chat .from {        
-  font-weight: bold;
+/*  font-weight: bold;*/
   color: lightSteelBlue;
   border-bottom: 1px solid #7F8794;
   margin-top: 5px;
@@ -167,7 +166,9 @@ b {
   color: lightSteelBlue;
 }
 .nicks a {
-  color: violet;
+/*  color: violet;*/
+text-decoration: none;
+color: #a9c;
 }
 .notice {
   color: lightSteelBlue;
