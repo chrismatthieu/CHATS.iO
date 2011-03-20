@@ -65,12 +65,12 @@ var httpServer = http.createServer(function(req, res) {
   } else {
     var path = url.parse(req.url).pathname;
 
-    if(!/\.(js|html|swf|wav|css|png|mp3)$/.test(path)){
+    if(!/\.(js|html|swf|wav|css|png|mp3|gif)$/.test(path)){
 		path = "/client-io.html";
 	}
     switch (path) {
       default:
-        if (/\.(js|html|swf|wav|css|png|mp3)$/.test(path)){
+        if (/\.(js|html|swf|wav|css|png|mp3|gif)$/.test(path)){
           try {
           
             var ct = "text/html";
@@ -92,6 +92,10 @@ var httpServer = http.createServer(function(req, res) {
             }
             if(path.substr(-4) === '.png') {
               ct = "image/png";
+              mode = "binary";
+            }
+            if(path.substr(-4) === '.gif') {
+              ct = "image/gif";
               mode = "binary";
             }
             res.writeHead(200, {'Content-Type': ct });
