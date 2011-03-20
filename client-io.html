@@ -8,17 +8,19 @@
     <script src="/public/js/underscore-min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client-io.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> 
 
     <link rel="stylesheet" type="text/css" href="/client-io.css">
+
   </head>
   <body>
     <div class="help">
-        <img src="/public/bubblepurpleio.png" width="50"> http://chats.io<em>/<script>document.write (room);</script> ... or any chatroom name</em>      
+        <img src="/public/bubblepurpleio.png" width="50"> <span>http://chats.io<em>/<script>document.write (room);</script></em></span> ... or any chatroom name
     </div>
 	
 	
-    <audio id="audio_new_pm" src="/audio/new_pm.wav" preload="auto"></audio>
-    <audio id="audio_msg" src="/audio/sound.wav" preload="auto"></audio>
+    <audio id="audio_new_pm" src="/audio/new_pm.mp3" preload="auto"></audio>
+    <audio id="audio_msg" src="/audio/sound.mp3" preload="auto"></audio>
 
     <div id="rooms"><ul></ul> &nbsp; <p align="right">Commands: /nick your_nick,  /join a_new_room,  /leave, <a href="/about.html" target="_blank">About Us</a></p></div>
 	

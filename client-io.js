@@ -36,7 +36,7 @@ socket.on('message', function(message){
       if(nick == ""){
 		nick = "guest";
 	  } 
-		socket.send("/nick " + nick + "_" + conn_id); 
+		socket.send("/nick " + HTMLEncode(nick) + "_" + conn_id); 
 
       break;
     
@@ -148,6 +148,7 @@ socket.on('message', function(message){
       break;
     
     case "/list":
+      $('#n_' + room).html("");
       _.each(data.slice(1).join(" ").split(","), function(data) {
         n = data.split(":");
         var nh = "#n_" + room + "_" + n[0];
@@ -304,6 +305,21 @@ function HTMLEncode(wText){
   };
   wText=wText.replace(/</g, "&lt;") ;
   wText=wText.replace(/>/g, "&gt;") ;
+
+// emoticons
+  wText=wText.replace(/:\)/g, '<img src="/public/happy.gif">') ;
+  wText=wText.replace(/:-\)/g, '<img src="/public/happy.gif">') ;
+  wText=wText.replace(/:\(/g, '<img src="/public/sad.gif">') ;
+  wText=wText.replace(/:-\(/g, '<img src="/public/sad.gif">') ;
+  wText=wText.replace(/:'\(/g, '<img src="/public/sad.gif">') ;
+  wText=wText.replace(/:D/g, '<img src="/public/awesome.gif">') ;
+  wText=wText.replace(/:P/g, '<img src="/public/tongue.gif">') ;
+  wText=wText.replace(/:p/g, '<img src="/public/tongue.gif">') ;
+  wText=wText.replace(/;\)/g, '<img src="/public/wink.gif">') ;
+  wText=wText.replace(/;-\)/g, '<img src="/public/wink.gif">') ;
+  wText=wText.replace(/;\//g, '<img src="/public/wink.gif">') ;
+	
+
   return wText;
 };
 
@@ -330,7 +346,6 @@ function displayRoom(r) {
 }
 
 function refreshList(r) {
-  $('#n_' + r).html("");
   socket.send("/list " + r);
 }
 
@@ -359,3 +374,16 @@ function IsNumeric(input)
 {
    return (input - 0) == input && input.length > 0;
 }
+
+$(window).keydown(function(e) {
+    if (e.keyCode === 9) {
+        var $t = $('#t_main'),
+            nick = $('.nicks a').filter(function() {
+                return $(this).text().toLowerCase().indexOf($t.val().toLowerCase()) >= 0;
+            }).first().text();
+        if (!!nick) {
+            $t.val(nick + ': ');
+        }
+        return false;
+    }
+});

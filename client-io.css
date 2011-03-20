@@ -8,13 +8,12 @@ a img {
   border: none !important; }
 
 a {
-  font-weight: bold;
   text-decoration: none;
-  color: violet;
-  -webkit-transition-property: opacity, -webkit-transform, color, background-color, padding, -webkit-box-shadow;
-  -webkit-transition-duration: 0.15s;
-  -webkit-transition-timing-function: ease-out; }
-  a:hover { opacity: 0.8; }
+  color: #a9c;
+ }
+
+a:hover { opacity: 0.8; }
+
 #ribbon {
   position: fixed;
   top: 0;
@@ -33,21 +32,23 @@ a {
 }
 .chat {
   position: absolute;
-  bottom: 80px;
+  bottom: 76px;
   left: 10px;
-  top: 100px;
-  right: 200px;
+  top: 55px;
+  right: 180px;
   overflow-y: auto;
 /*  color: white;*/
   color: #440066;
   padding: 10px;
 /*  background: #1B1D20;*/
   background:rgba(255, 255, 255, 0.699219);
-  border: 5px solid #440066;
+  border-style: solid;
+  border-color: #440066;
+  border-width: 0 0 3px 8px;
   word-wrap: break-word;  
 }
 .chat .from {        
-  font-weight: bold;
+/*  font-weight: bold;*/
   color: lightSteelBlue;
   border-bottom: 1px solid #7F8794;
   margin-top: 5px;
@@ -61,19 +62,23 @@ a {
 input[type=submit] {
   display: none;
 }
+.room form {
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  right: 211px;
+}
 .room form input[type=text]{
 	padding:5px 10px;
 	color:#666666;
 	background-color:#F7F7F7;
-	border:1px solid #CCCCCC;
-	position: absolute;
-  bottom: 40px;
-  left: 10px;
-  right: 200px;
+	border-style: solid;
+	border-width: 0 3px 1px 8px;
+	border-color: #CCCCCC #440066;
   font-size: 20px;
   line-height: 25px;
   background: #fff;       
-  width: 80%;
+  width: 100%;
 	}
 
 .nicks {
@@ -113,14 +118,32 @@ input[type=submit] {
   background: #440066;
   padding: 15px;
   color:white;
-  font-family:'impact', Helvetica, Arial, sans-serif;
-  font-size: 40px;
-  text-align: center;
-  padding: 15px 0 15px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  text-align: left;
+  padding: 5px 10px;
   margin: 0;
+  line-height: 32px;
+
+
+
 }
-em {
+.help span {
+  font-family: 'Lobster', Helvetica, Arial, sans-serif;
+  font-size:32px;
+  text-shadow:#110044 0 -1px 1px, #EEDDFF 0 1px 1px;
+}
+.help img {
+  position: relative;
+  top: 5px;
+  left: 0;
+}
+/*em {
   color:rgba(255, 255, 255, 0.699219);
+  font-style:normal;
+}*/
+.help em {
+  color:#a9c;
   font-style:normal;
 }
 .help b {
@@ -143,7 +166,9 @@ b {
   color: lightSteelBlue;
 }
 .nicks a {
-  color: violet;
+/*  color: violet;*/
+text-decoration: none;
+color: #a9c;
 }
 .notice {
   color: lightSteelBlue;
