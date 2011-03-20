@@ -65,12 +65,12 @@ var httpServer = http.createServer(function(req, res) {
   } else {
     var path = url.parse(req.url).pathname;
 
-    if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
+    if(!/\.(js|html|swf|wav|css|png|mp3)$/.test(path)){
 		path = "/client-io.html";
 	}
     switch (path) {
       default:
-        if (/\.(js|html|swf|wav|css|png)$/.test(path)){
+        if (/\.(js|html|swf|wav|css|png|mp3)$/.test(path)){
           try {
           
             var ct = "text/html";
@@ -84,6 +84,10 @@ var httpServer = http.createServer(function(req, res) {
             if(path.substr(-4) === '.css') ct = "text/css";              
             if(path.substr(-4) === '.wav') {
               ct = "audio/x-wav";
+              mode = "binary";
+            }
+            if(path.substr(-4) === '.mp3') {
+              ct = "type/mpeg";
               mode = "binary";
             }
             if(path.substr(-4) === '.png') {
