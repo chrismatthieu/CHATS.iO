@@ -15,8 +15,8 @@ if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 }
 if(room == "") room = "main";
 
-// var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
-var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
+// var socket = new io.Socket(null, {port: 80, rememberTransport: false});
 
 socket.connect();
 
@@ -359,3 +359,16 @@ function IsNumeric(input)
 {
    return (input - 0) == input && input.length > 0;
 }
+
+$(window).keydown(function(e) {
+    if (e.keyCode === 9) {
+        var $t = $('#t_main'),
+            nick = $('.nicks a').filter(function() {
+                return $(this).text().toLowerCase().indexOf($t.val().toLowerCase()) >= 0;
+            }).first().text();
+        if (!!nick) {
+            $t.val(nick + ': ');
+        }
+        return false;
+    }
+});
