@@ -36,7 +36,7 @@ socket.on('message', function(message){
       if(nick == ""){
 		nick = "guest";
 	  } 
-		socket.send("/nick " + nick + "_" + conn_id); 
+		socket.send("/nick " + HTMLEncode(nick) + "_" + conn_id); 
 
       break;
     
