@@ -148,6 +148,7 @@ socket.on('message', function(message){
       break;
     
     case "/list":
+      $('#n_' + room).html("");
       _.each(data.slice(1).join(" ").split(","), function(data) {
         n = data.split(":");
         var nh = "#n_" + room + "_" + n[0];
@@ -330,7 +331,6 @@ function displayRoom(r) {
 }
 
 function refreshList(r) {
-  $('#n_' + r).html("");
   socket.send("/list " + r);
 }
 
