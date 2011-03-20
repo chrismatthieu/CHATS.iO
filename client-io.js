@@ -15,8 +15,8 @@ if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 }
 if(room == "") room = "main";
 
-// var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
-var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+ var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
+//var socket = new io.Socket(null, {port: 80, rememberTransport: false});
 
 socket.connect();
 
@@ -28,7 +28,7 @@ socket.on('message', function(message){
   
   var msg_room = "";
   if(message.room) msg_room = message.room;
-  
+
   switch(data[0]) {
     case "/hello":
       conn_id = data[1];
@@ -97,7 +97,7 @@ socket.on('message', function(message){
 		if(nick == message.from) 
 			$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div>" + fname + "</div>");
 		else
-          	$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div><a href='#' onclick='socket.send(\"/pm "+ lname+"\")'>" + fname + "</a></div>");
+          	$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div><a href='#" + fname + "' onclick='socket.send(\"/pm "+ lname+"\")'>" + fname + "</a></div>");
 
 
         }
@@ -158,7 +158,7 @@ socket.on('message', function(message){
         if($(nh).html() == null) {
           if(n[1] == "undefined" || n[1] == undefined) value = n[0];
           if(n[0] == conn_id) $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'>" + fname +"</div>");
-          else $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'><a href='#' onclick='socket.send(\"/pm "+ n[0]+"\")'>" + fname +"</a></div>");
+          else $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'><a href='#" + fname + "' onclick='socket.send(\"/pm "+ n[0]+"\")'>" + fname +"</a></div>");
         } else {
           $(nh + " a").html(fname);
           $("#r_" + n[0]).html("@" + fname);
@@ -177,6 +177,7 @@ socket.on('message', function(message){
     
     case "/leave":
       $("#n_" + msg_room + "_" + data[1]).detach();
+
 	  var fname = message.from.split("_")[0];
       batch('part_' + msg_room, fname, function(names) {
         notice(msg_room, names + " left the room");

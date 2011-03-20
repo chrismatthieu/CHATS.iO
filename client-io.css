@@ -9,7 +9,7 @@ a img {
 
 a {
   text-decoration: none;
-  color: #a9c;
+  color: #776b8f;
  }
 
 a:hover { opacity: 0.8; }
@@ -49,7 +49,7 @@ a:hover { opacity: 0.8; }
 }
 .chat .from {        
 /*  font-weight: bold;*/
-  color: lightSteelBlue;
+  color: #8a9aae;
   border-bottom: 1px solid #7F8794;
   margin-top: 5px;
 }
@@ -161,6 +161,7 @@ b {
 }
 #rooms ul li.pm.active {
   background: purple;
+  color: rgba(255, 255, 255, 0.699219);
 }
 .nicks {
   color: lightSteelBlue;
