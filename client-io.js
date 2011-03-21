@@ -29,7 +29,7 @@ socket.on('message', function(message){
   
   var msg_room = "";
   if(message.room) msg_room = message.room;
-
+  
   switch(data[0]) {
     case "/hello":
       conn_id = data[1];
