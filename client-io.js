@@ -3,6 +3,7 @@ var debug = true;
 var nick = "";
 var room = "main";
 var rooms = {};
+var numUnread = 0;
  
 var nick=prompt("Please enter your name",""); 
 
@@ -74,6 +75,7 @@ socket.on('message', function(message){
 			var fname = message.name.split("_")[0];
 
             if(room != id) {
+              addUnread();
               rooms[id]["nb"]++;
               $("#r_" + id).html("@" + fname + " (" + rooms[id]["nb"] + ")");
             } else {
@@ -110,6 +112,7 @@ socket.on('message', function(message){
         // $('#chat_' + message.room).append("<div>" + HTMLEncode(data.slice(1).join(" ")) + "</div>");
         scrollChat();
         if(room != message.room) {
+          addUnread();
           rooms[message.room]["nb"]++;
           $("#r_" + message.room).html(message.room + " (" + rooms[message.room]["nb"] + ")");
         } else {
@@ -342,6 +345,7 @@ function displayRoom(r) {
   
   socket.send("/list " + r);
   $('#room_' + r).css("display", "block");
+  cleanRoom(r);
   rooms[r]["nb"] = 0;
   scrollChat();
 }
@@ -376,6 +380,21 @@ function IsNumeric(input)
    return (input - 0) == input && input.length > 0;
 }
 
+function cleanRoom(roomId) {
+  numUnread -= rooms[roomId]["nb"];
+  updateTitle();
+}
+function addUnread() {
+  numUnread++;
+  updateTitle();
+}
+function updateTitle() {
+  var read = "";
+  if (numUnread>0) {
+  	read = "(" + numUnread + ") ";
+  }
+  document.title = read + "CHATS.IO";
+}
 $(window).keydown(function(e) {
     if (e.keyCode === 9) {
         var $t = $('#t_main'),
