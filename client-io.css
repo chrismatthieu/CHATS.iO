@@ -9,7 +9,7 @@ a img {
 
 a {
   text-decoration: none;
-  color: #776b8f;
+  color: #a9c;
  }
 
 a:hover { opacity: 0.8; }
@@ -49,7 +49,7 @@ a:hover { opacity: 0.8; }
 }
 .chat .from {        
 /*  font-weight: bold;*/
-  color: #8a9aae;
+  color: lightSteelBlue;
   border-bottom: 1px solid #7F8794;
   margin-top: 5px;
 }
