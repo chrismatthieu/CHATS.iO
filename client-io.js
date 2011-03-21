@@ -3,7 +3,7 @@ var debug = true;
 var nick = "";
 var room = "main";
 var rooms = {};
- 
+  
 var nick=prompt("Please enter your name",""); 
 
 var batches = {};
