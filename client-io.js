@@ -52,6 +52,7 @@ socket.on('message', function(message){
             rooms[id]["nb"] = 0;
             rooms[id]["type"] = "pm";
             rooms[id]["to"] = message.name;
+            updateTitle("[PM] ");
 			var fname = message.name.split("_")[0];
             try { $("#audio_new_pm")[0].play(); } catch(e) {}            
             $('#rooms ul:first-child').append("<li class='pm' id='r_" + id + "'>@" + fname + "</li>");
@@ -382,18 +383,18 @@ function IsNumeric(input)
 
 function cleanRoom(roomId) {
   numUnread -= rooms[roomId]["nb"];
-  updateTitle();
+  updateTitle("");
 }
 function addUnread() {
   numUnread++;
-  updateTitle();
+  updateTitle("");
 }
-function updateTitle() {
+function updateTitle(leading) {
   var read = "";
   if (numUnread>0) {
   	read = "(" + numUnread + ") ";
   }
-  document.title = read + "CHATS.IO";
+  document.title = leading + read + "CHATS.IO";
 }
 $(window).keydown(function(e) {
     if (e.keyCode === 9) {
