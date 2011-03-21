@@ -105,7 +105,7 @@ socket.on('message', function(message){
         }
 
 		var msgtext = HTMLEncode(data.slice(1).join(" "))
-		var msgtextlinks = msgtext.replace(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/, "<a href='$1://$3' target='blank'>$1://$3</a>");
+		var msgtextlinks = msgtext.replace(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/, "<a href='$1://$3' target='blank' rel=\"nofollow\">$1://$3</a>");
 
 
         $('#chat_' + message.room).append("<div>" + msgtextlinks + "</div>");
