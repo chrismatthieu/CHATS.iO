@@ -328,6 +328,17 @@ function HTMLEncode(wText){
   return wText;
 };
 
+function blurredHandler(r) {
+  if ($('#' + r).val().replace(/ /g, '') == '') {
+  	$('#' + r).val("Type a message here");
+  }
+}
+function focussedHandler(r) {
+  if ($('#' + r).val() == "Type a message here") {
+  	$('#' + r).val("");
+  }
+}
+
 function displayRoom(r) {
   r = r.split("_")[1];  
   room = r;
@@ -364,6 +375,8 @@ function addNewRoom(r) {
   $('#f_' + r).append('<input type="submit" value="send" />');
   $('.room').css("display","none");
   $('#r_' + r).click(function() { displayRoom(this.id) });        
+  $('#t_' + r).focus(function() { focussedHandler(this.id) });
+  $('#t_' + r).blur(function() { blurredHandler(this.id) });
   $("#rooms ul li").removeClass("active");
   $('#r_' + r).addClass("active");
   $('#room_' + r).css("display", "block");
