@@ -10,7 +10,15 @@ a img {
 a {
   text-decoration: none;
   color: #a9c;
+  outline: none;
  }
+
+label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+.ie7 img { -ms-interpolation-mode: bicubic; }
+input[type="radio"] { vertical-align: text-bottom; }
+input[type="checkbox"] { vertical-align: bottom; }
+.ie7 input[type="checkbox"] { vertical-align: baseline; }
+.ie6 input { vertical-align: text-bottom; }
 
 a:hover { opacity: 0.8; }
 
@@ -35,16 +43,18 @@ a:hover { opacity: 0.8; }
   bottom: 76px;
   left: 10px;
   top: 55px;
+/*  height: 200px; */
   right: 180px;
   overflow-y: auto;
 /*  color: white;*/
   color: #440066;
   padding: 10px;
-/*  background: #1B1D20;*/
-  background:rgba(255, 255, 255, 0.699219);
+/*  background: rgba(255, 255, 255, 0.699219); */
+  background: transparent;
   border-style: solid;
   border-color: #440066;
-  border-width: 0 0 3px 8px;
+  border-width: 0 5px 3px 5px;
+  
   word-wrap: break-word;  
 }
 .chat .from {        
@@ -60,26 +70,40 @@ a:hover { opacity: 0.8; }
 }
 
 input[type=submit] {
-  display: none;
+/*  display: none; */
+  border-style: solid;
+  background-color: #EEE;
+  padding: 5px 10px;
+  
+  right: -10px;
+  bottom: 5px;
+  position: absolute;
+  
 }
 .room form {
   position: absolute;
   bottom: 40px;
   left: 10px;
-  right: 211px;
+  right: 210px;
 }
 .room form input[type=text]{
-	padding:5px 10px;
-	color:#666666;
-	background-color:#F7F7F7;
-	border-style: solid;
-	border-width: 0 3px 1px 8px;
-	border-color: #CCCCCC #440066;
+  padding:5px 10px;
+  color:#666666;
+  background-color:#F7F7F7;
+  border-style: solid;
+  border-width: 0 5px 1px 5px;
+  border-color: #CCCCCC #440066;
   font-size: 20px;
   line-height: 25px;
   background: #fff;       
   width: 100%;
-	}
+  -webkit-border-bottom-left-radius : 20px; 
+  -moz-border-radius-bottomleft : 20px; 
+  border-bottom-left-radius : 20px; 
+  -webkit-border-bottom-right-radius : 20px; 
+  -moz-border-radius-bottomright : 20px; 
+  border-bottom-right-radius : 20px; 
+}
 
 .nicks {
   position: absolute;
