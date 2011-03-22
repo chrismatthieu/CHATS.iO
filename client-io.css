@@ -34,9 +34,9 @@ a:hover { opacity: 0.8; }
   position: absolute;
   bottom: 76px;
   left: 10px;
-/*  top: 55px; */
+  top: 55px;
+/*  height: 200px; */
   right: 180px;
-  height: 200px;
   overflow-y: auto;
 /*  color: white;*/
   color: #440066;
@@ -45,13 +45,8 @@ a:hover { opacity: 0.8; }
   background: transparent;
   border-style: solid;
   border-color: #440066;
-  border-width: 3px 8px 3px 3px;
-  -webkit-border-top-left-radius : 20px; 
-  -moz-border-radius-topleft : 20px; 
-  border-top-left-radius : 20px; 
-  -webkit-border-top-right-radius : 20px; 
-  -moz-border-radius-topright : 20px; 
-  border-top-right-radius : 20px; 
+  border-width: 0 5px 3px 5px;
+  
   word-wrap: break-word;  
 }
 .chat .from {        
@@ -73,20 +68,26 @@ input[type=submit] {
   position: absolute;
   bottom: 40px;
   left: 10px;
-  right: 211px;
+  right: 210px;
 }
 .room form input[type=text]{
   padding:5px 10px;
   color:#666666;
   background-color:#F7F7F7;
   border-style: solid;
-  border-width: 0 8px 1px 3px;
+  border-width: 0 5px 1px 5px;
   border-color: #CCCCCC #440066;
   font-size: 20px;
   line-height: 25px;
   background: #fff;       
   width: 100%;
-	}
+  -webkit-border-bottom-left-radius : 20px; 
+  -moz-border-radius-bottomleft : 20px; 
+  border-bottom-left-radius : 20px; 
+  -webkit-border-bottom-right-radius : 20px; 
+  -moz-border-radius-bottomright : 20px; 
+  border-bottom-right-radius : 20px; 
+}
 
 .nicks {
   position: absolute;
