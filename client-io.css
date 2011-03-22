@@ -34,17 +34,18 @@ a:hover { opacity: 0.8; }
   position: absolute;
   bottom: 76px;
   left: 10px;
-  top: 55px;
+/*  top: 55px; */
   right: 180px;
+  height: 200px;
   overflow-y: auto;
 /*  color: white;*/
   color: #440066;
   padding: 10px;
-/*  background: #1B1D20;*/
-  background:rgba(255, 255, 255, 0.699219);
+/*  background: rgba(255, 255, 255, 0.699219); */
+  background: transparent;
   border-style: solid;
   border-color: #440066;
-  border-width: 0 0 3px 8px;
+  border-width: 0 8px 3px 3px;
   word-wrap: break-word;  
 }
 .chat .from {        
@@ -69,12 +70,12 @@ input[type=submit] {
   right: 211px;
 }
 .room form input[type=text]{
-	padding:5px 10px;
-	color:#666666;
-	background-color:#F7F7F7;
-	border-style: solid;
-	border-width: 0 3px 1px 8px;
-	border-color: #CCCCCC #440066;
+  padding:5px 10px;
+  color:#666666;
+  background-color:#F7F7F7;
+  border-style: solid;
+  border-width: 0 8px 1px 3px;
+  border-color: #CCCCCC #440066;
   font-size: 20px;
   line-height: 25px;
   background: #fff;       
