@@ -10,7 +10,10 @@ a img {
 a {
   text-decoration: none;
   color: #a9c;
+  outline: none;
  }
+
+label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
 
 a:hover { opacity: 0.8; }
 
@@ -62,7 +65,15 @@ a:hover { opacity: 0.8; }
 }
 
 input[type=submit] {
-  display: none;
+/*  display: none; */
+  border-style: solid;
+  background-color: #EEE;
+  padding: 5px 10px;
+  
+  right: -10px;
+  bottom: 5px;
+  position: absolute;
+  
 }
 .room form {
   position: absolute;
