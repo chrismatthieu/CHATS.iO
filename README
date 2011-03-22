@@ -4,4 +4,8 @@ CHATS.iO (fork of https://github.com/chrismatthieu/CHATS.iO)
 !! You need the latest node.js !!
 node server-io.js
 
+Change the entry in client-io.js to listen on port 8764 (it may be there currently, I'm not keeping track).
+
+Start up node.js
+
 Then open your browser : http://localhost:8764
