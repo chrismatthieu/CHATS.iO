@@ -4,8 +4,13 @@ var nick = "";
 var room = "main";
 var rooms = {};
 var numUnread = 0;
- 
-var nick=prompt("Please enter your name",""); 
+var nick =""
+if (!$.cookie('username')) {
+	nick = prompt("Please enter your name",""); 
+	$.cookie('username', nick, { expires: 700, path: '/'});
+} else {
+	nick = $.cookie('username');
+}
 
 var batches = {};
 
@@ -38,7 +43,7 @@ socket.on('message', function(message){
 		nick = "guest";
 	  } 
 		socket.send("/nick " + HTMLEncode(nick) + "_" + conn_id); 
-
+		
       break;
     
     case "/msg":
@@ -220,6 +225,9 @@ function send(msg) {
         room = data[1].replace(/\W/g, "");
         msg = "/join " + room;
         can_send = nick == "" ? false : true;
+        break;
+      case "/nick":
+        $.cookie('username', HTMLEncode(data[1]), { expires: 700, path: '/'});
         break;
       case "/leave":
         msg = msg + " " + room;
