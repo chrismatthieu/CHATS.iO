@@ -45,7 +45,13 @@ a:hover { opacity: 0.8; }
   background: transparent;
   border-style: solid;
   border-color: #440066;
-  border-width: 0 8px 3px 3px;
+  border-width: 3px 8px 3px 3px;
+  -webkit-border-top-left-radius : 20px; 
+  -moz-border-radius-topleft : 20px; 
+  border-top-left-radius : 20px; 
+  -webkit-border-top-right-radius : 20px; 
+  -moz-border-radius-topright : 20px; 
+  border-top-right-radius : 20px; 
   word-wrap: break-word;  
 }
 .chat .from {        
