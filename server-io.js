@@ -148,15 +148,32 @@ socket.on("connection", function(client){
 
       switch (msg[0]) { 
         case "/whoami": 
+			// nicks[client.sessionId.toString()] = undefined;
           client.send(json({ msg: "/hello " + client.sessionId.toString() }));
           break;
         case "/nick":
-          if(ignore_uniq || uniqNick(client, msg.slice(1).join(" ").trim())) {
+          if(ignore_uniq || uniqNick(client, msg.slice(1).join(" ").trim())) {	
             if(nicks[client.sessionId.toString()] == undefined) nicks[client.sessionId.toString()] = {};
             nicks[client.sessionId.toString()]["nick"] = msg.slice(1).join(" ").trim();
             client.send(json({ msg: "/your_nick " + msg.slice(1).join(" ").trim() }));   
+ console.log('msg:/your_nick');
             sendNicksList(client, msg.slice(1).join(" "));       
-          } else client.send(json({ msg: "/notice Login " + msg.slice(1).join(" ").trim() + " already used"}));
+
+// ELSE IF RECONNECTED
+		// } else {
+		//             // if(nicks[client.sessionId.toString()] == undefined) nicks[client.sessionId.toString()] = {};
+		// 	nicks[client.sessionId.toString()] = {};
+		//             nicks[client.sessionId.toString()]["nick"] = msg.slice(1).join(" ").trim();
+		//             client.send(json({ msg: "/your_nick " + msg.slice(1).join(" ").trim() }));   
+		//             sendNicksList(client, msg.slice(1).join(" "));       
+		// };
+
+		} else {
+			ignore_uniq = false;
+			// client.send(json({ msg: "/notice Login " + msg.slice(1).join(" ").trim() + " already used"}));
+		}
+
+          // } else client.send(json({ msg: "/notice Login " + msg.slice(1).join(" ").trim() + " already used"}));
           break;
         case "/join":
           if(nicks[client.sessionId.toString()] == undefined) nicks[client.sessionId.toString()] = {};
