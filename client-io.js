@@ -391,7 +391,7 @@ function addNewRoom(r) {
   $('#room_' + r).append("<div class='nicks' id='n_"+ r +"'></div>");
 if ($('#t_' + r).length == 0) {
   $('#f_' + r).append('<input type="text" id="t_' + r + '" name="t" value="" width="50"  autocomplete="off"/><script>t_' + r + '.focus();</script>');
-  $('#f_' + r).append('<input type="submit" value="main" />');
+  $('#f_' + r).append('<input type="submit" value="send" />');
 }
   $('.room').css("display","none");
   $('#r_' + r).click(function() { displayRoom(this.id) });        
