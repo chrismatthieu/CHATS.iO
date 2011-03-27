@@ -3,8 +3,14 @@ var debug = true;
 var nick = "";
 var room = "main";
 var rooms = {};
-  
-var nick=prompt("Please enter your name",""); 
+var numUnread = 0;
+var nick =""
+if (!$.cookie('username')) {
+	nick = prompt("Please enter your name",""); 
+	$.cookie('username', nick, { expires: 700, path: '/'});
+} else {
+	nick = $.cookie('username');
+}
 
 var batches = {};
 
@@ -15,8 +21,8 @@ if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 }
 if(room == "") room = "main";
 
-// var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
-var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+ var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
+//var socket = new io.Socket(null, {port: 80, rememberTransport: false});
 
 socket.connect();
 
@@ -57,6 +63,7 @@ socket.on('message', function(message){
             rooms[id]["nb"] = 0;
             rooms[id]["type"] = "pm";
             rooms[id]["to"] = message.name;
+            updateTitle("[PM] ");
 			var fname = message.name.split("~")[0];
             try { $("#audio_new_pm")[0].play(); } catch(e) {}            
             $('#rooms ul:first-child').append("<li class='pm' id='r_" + id + "'>@" + fname + "</li>");
@@ -84,6 +91,7 @@ socket.on('message', function(message){
 			var fname = message.name.split("~")[0];
 
             if(room != id) {
+              addUnread();
               rooms[id]["nb"]++;
               $("#r_" + id).html("@" + fname + " (" + rooms[id]["nb"] + ")");
             } else {
@@ -107,19 +115,20 @@ socket.on('message', function(message){
 		if(nick == message.from) 
 			$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div>" + fname + "</div>");
 		else
-          	$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div><a href='#' onclick='socket.send(\"/pm "+ lname+"\")'>" + fname + "</a></div>");
+          	$('#chat_' + message.room).append("<div class='from'><div class='date'>"+hour+":"+min+"</div><a href='#" + fname + "' onclick='socket.send(\"/pm "+ lname+"\")'>" + fname + "</a></div>");
 
 
         }
 
 		var msgtext = HTMLEncode(data.slice(1).join(" "))
-		var msgtextlinks = msgtext.replace(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/, "<a href='$1://$3' target='blank'>$1://$3</a>");
+		var msgtextlinks = msgtext.replace(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/, "<a href='$1://$3' target='blank' rel=\"nofollow\">$1://$3</a>");
 
 
         $('#chat_' + message.room).append("<div>" + msgtextlinks + "</div>");
         // $('#chat_' + message.room).append("<div>" + HTMLEncode(data.slice(1).join(" ")) + "</div>");
         scrollChat();
         if(room != message.room) {
+          addUnread();
           rooms[message.room]["nb"]++;
           $("#r_" + message.room).html(message.room + " (" + rooms[message.room]["nb"] + ")");
         } else {
@@ -168,7 +177,7 @@ socket.on('message', function(message){
         if($(nh).html() == null) {
           if(n[1] == "undefined" || n[1] == undefined) value = n[0];
           if(n[0] == conn_id) $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'>" + fname +"</div>");
-          else $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'><a href='#' onclick='socket.send(\"/pm "+ n[0]+"\")'>" + fname +"</a></div>");
+          else $("#n_" + message.room).append("<div id='n_" + room + "_" +n[0]+"'><a href='#" + fname + "' onclick='socket.send(\"/pm "+ n[0]+"\")'>" + fname +"</a></div>");
         } else {
           $(nh + " a").html(fname);
           $("#r_" + n[0]).html("@" + fname);
@@ -226,6 +235,9 @@ function send(msg) {
         room = data[1].replace(/\W/g, "");
         msg = "/join " + room;
         can_send = nick == "" ? false : true;
+        break;
+      case "/nick":
+        $.cookie('username', HTMLEncode(data[1]), { expires: 700, path: '/'});
         break;
       case "/leave":
         msg = msg + " " + room;
@@ -334,6 +346,17 @@ function HTMLEncode(wText){
   return wText;
 };
 
+function blurredHandler(r) {
+  if ($('#' + r).val().replace(/ /g, '') == '') {
+  	$('#' + r).val("Type a message here");
+  }
+}
+function focussedHandler(r) {
+  if ($('#' + r).val() == "Type a message here") {
+  	$('#' + r).val("");
+  }
+}
+
 function displayRoom(r) {
   r = r.split("_")[1];  
   room = r;
@@ -352,6 +375,7 @@ function displayRoom(r) {
   
   socket.send("/list " + r);
   $('#room_' + r).css("display", "block");
+  cleanRoom(r);
   rooms[r]["nb"] = 0;
   scrollChat();
 }
@@ -371,6 +395,8 @@ if ($('#t_' + r).length == 0) {
 }
   $('.room').css("display","none");
   $('#r_' + r).click(function() { displayRoom(this.id) });        
+  $('#t_' + r).focus(function() { focussedHandler(this.id) });
+  $('#t_' + r).blur(function() { blurredHandler(this.id) });
   $("#rooms ul li").removeClass("active");
   $('#r_' + r).addClass("active");
   $('#room_' + r).css("display", "block");
@@ -401,6 +427,21 @@ function IsNumeric(input)
    return (input - 0) == input && input.length > 0;
 }
 
+function cleanRoom(roomId) {
+  numUnread -= rooms[roomId]["nb"];
+  updateTitle("");
+}
+function addUnread() {
+  numUnread++;
+  updateTitle("");
+}
+function updateTitle(leading) {
+  var read = "";
+  if (numUnread>0) {
+  	read = "(" + numUnread + ") ";
+  }
+  document.title = leading + read + "CHATS.IO";
+}
 $(window).keydown(function(e) {
     if (e.keyCode === 9) {
         var $t = $('#t_main'),
