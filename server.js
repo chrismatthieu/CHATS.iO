@@ -112,7 +112,7 @@ var httpServer = http.createServer(function(req, res) {
   } 
 });
 
-httpServer.listen(8764); 
+httpServer.listen(80); 
 
 var socket = io.listen(httpServer);
 
