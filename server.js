@@ -113,6 +113,8 @@ var httpServer = http.createServer(function(req, res) {
 });
 
 httpServer.listen(80); 
+// httpServer.listen(8764); 
+
 
 var socket = io.listen(httpServer);
 

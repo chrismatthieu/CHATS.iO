@@ -65,13 +65,16 @@ socket.on('message', function(message){
             rooms[id]["to"] = message.name;
             updateTitle("[PM] ");
 			var fname = message.name.split("~")[0];
-            try { $("#audio_new_pm")[0].play(); } catch(e) {}            
+            try { $("#audio_new_pm")[0].play(); } catch(e) {}  
+          	// play('new_pm');
             $('#rooms ul:first-child').append("<li class='pm' id='r_" + id + "'>@" + fname + "</li>");
             addNewRoom(id);
             room = id;
           }
           if(text != "") {
             try { $("#audio_msg")[0].play(); } catch(e) {}
+          	// play('sound');
+
             if(rooms[id]["last_user"] != message.toname) {
               var date = new Date(),
                 hour  = date.getHours(),
@@ -102,6 +105,8 @@ socket.on('message', function(message){
       } 
       else { // Normal message
         try { $("#audio_msg")[0].play(); } catch(e) {}
+      	// play('sound');
+
         if(rooms[message.room]["last_user"] != message.from) {
           var date = new Date(),
             hour  = date.getHours(),
@@ -454,3 +459,14 @@ $(window).keydown(function(e) {
         return false;
     }
 });
+
+// function play(sound, repeat){
+// 		var audio = new Audio("/audio/" + sound + ".mp3");
+//  
+// 		if(repeat){
+// 			audio.loop = true;
+// 		}
+// 		audio.play();
+//  
+// 		return audio;
+// 	}
