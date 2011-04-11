@@ -15,6 +15,9 @@
 
     <link rel="stylesheet" type="text/css" href="/client-io.css">
 	<link REL="SHORTCUT ICON" HREF="/public/favicon.ico">
+	
+	<script type="text/javascript" src="/thickbox.js"></script>
+	<link rel="stylesheet" href="/thickbox.css" type="text/css" media="screen" />
 
   </head>
   <body>
@@ -22,9 +25,17 @@
 		<img id="ribbon" src="/public/forkme_right_white_ffffff.png"/>
 		</a>
     <div class="help">
-        <img src="/public/bubblepurpleio.png" width="50"> <span>http://chats.io<em>/<script>document.write (room);</script></em></span> ... or any chatroom name
-        <!-- <a class="fork" href="https://github.com/pokoleo/CHATS.iO">Fork me on Github</a> -->
+        <img src="/public/bubblepurpleio.png" width="50"> <span>http://chats.io<em>/<script>document.write (room);</script></em></span> ... or any chatroom name | 
+         <a href="#TB_inline?height=550&width=900&inlineId=hiddenVideoContent&modal=true" class="thickbox">Watch our video!</a>
     </div>
+
+		<div id="hiddenVideoContent" style="display:none;"> 
+			<p align="right"><a href="#" onclick="tb_remove()">close</a></p>
+		 	<p>
+<iframe title="YouTube video player" width="853" height="510" src="http://www.youtube.com/embed/XAH2L6GAzGg?rel=0&amp;hd=1" frameborder="0" allowfullscreen></iframe>
+			</p>
+		</div>
+
 	
 	
     <audio id="audio_new_pm" src="/audio/new_pm.mp3" preload="auto"></audio>
