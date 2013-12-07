@@ -1,6 +1,6 @@
 // node server-io.js
 var http = require("http"),
-  io = require('./socket.io'),
+  io = require('socket.io'),
   sys = require("sys"),
   fs = require("fs"),
   url = require('url'),
@@ -44,8 +44,9 @@ function broadCast(client, room, msg) {
       if(nicks[key] && nicks[key]["rooms"] && nicks[key]["rooms"].indexOf(room) >= 0) {
         console.log('key:' + key + ">" + msg);
         var n = "";
-        if(nicks[client.sessionId]) n = nicks[client.sessionId]["nick"];
-        client.send_to(key, json({ msg: HTMLEncode(msg), room: HTMLEncode(room), from: HTMLEncode(n) }));      
+        if(nicks[client.id]) n = nicks[client.id]["nick"];
+        // client.send_to(key, json({ msg: HTMLEncode(msg), room: HTMLEncode(room), from: HTMLEncode(n) }));      
+        client.broadcast.to(HTMLEncode(room)).emit('message', HTMLEncode(msg))
       }
     } catch(e) { console.log(e); }
   }  
@@ -112,26 +113,25 @@ var httpServer = http.createServer(function(req, res) {
   } 
 });
 
-httpServer.listen(80); 
-// httpServer.listen(8764); 
+// httpServer.listen(80); 
+httpServer.listen(8764); 
 
 
 var socket = io.listen(httpServer);
 
 socket.on("connection", function(client){
-
-  console.log("<"+client.sessionId+"> connected");
+  console.log("<"+client.id+"> connected");
   
   client.on("disconnect", function() {
   	console.log('disconnect detected');
 	
     var u_rooms = [];
-    if(nicks[client.sessionId.toString()] != undefined) u_rooms = nicks[client.sessionId.toString()]["rooms"];
-    console.log("<"+client.sessionId+"> disconnected");
+    if(nicks[client.id.toString()] != undefined) u_rooms = nicks[client.id.toString()]["rooms"];
+    console.log("<"+client.id+"> disconnected");
     for(var room in u_rooms) {
-      broadCast(client, u_rooms[room], "/quit " + client.sessionId); 
+      broadCast(client, u_rooms[room], "/quit " + client.id); 
     }
-    nicks[client.sessionId.toString()] = undefined;
+    nicks[client.id.toString()] = undefined;
  
   });
   
@@ -150,22 +150,22 @@ socket.on("connection", function(client){
 
       switch (msg[0]) { 
         case "/whoami": 
-			// nicks[client.sessionId.toString()] = undefined;
-          client.send(json({ msg: "/hello " + client.sessionId.toString() }));
+			// nicks[client.id.toString()] = undefined;
+          client.send(json({ msg: "/hello " + client.id.toString() }));
           break;
         case "/nick":
           if(ignore_uniq || uniqNick(client, msg.slice(1).join(" ").trim())) {	
-            if(nicks[client.sessionId.toString()] == undefined) nicks[client.sessionId.toString()] = {};
-            nicks[client.sessionId.toString()]["nick"] = msg.slice(1).join(" ").trim();
+            if(nicks[client.id.toString()] == undefined) nicks[client.id.toString()] = {};
+            nicks[client.id.toString()]["nick"] = msg.slice(1).join(" ").trim();
             client.send(json({ msg: "/your_nick " + msg.slice(1).join(" ").trim() }));   
  console.log('msg:/your_nick');
             sendNicksList(client, msg.slice(1).join(" "));       
 
 // ELSE IF RECONNECTED
 		// } else {
-		//             // if(nicks[client.sessionId.toString()] == undefined) nicks[client.sessionId.toString()] = {};
-		// 	nicks[client.sessionId.toString()] = {};
-		//             nicks[client.sessionId.toString()]["nick"] = msg.slice(1).join(" ").trim();
+		//             // if(nicks[client.id.toString()] == undefined) nicks[client.id.toString()] = {};
+		// 	nicks[client.id.toString()] = {};
+		//             nicks[client.id.toString()]["nick"] = msg.slice(1).join(" ").trim();
 		//             client.send(json({ msg: "/your_nick " + msg.slice(1).join(" ").trim() }));   
 		//             sendNicksList(client, msg.slice(1).join(" "));       
 		// };
@@ -178,10 +178,11 @@ socket.on("connection", function(client){
           // } else client.send(json({ msg: "/notice Login " + msg.slice(1).join(" ").trim() + " already used"}));
           break;
         case "/join":
-          if(nicks[client.sessionId.toString()] == undefined) nicks[client.sessionId.toString()] = {};
-          if(nicks[client.sessionId.toString()]["rooms"] == undefined) nicks[client.sessionId.toString()]["rooms"] = [];
-          nicks[client.sessionId.toString()]["rooms"].push(msg.slice(1).join(" "));
-          broadCast(client, msg.slice(1).join(" "),"/join " + nicks[client.sessionId.toString()]["nick"] + " joined the #" + msg.slice(1).join(" ") + " room");
+          if(nicks[client.id.toString()] == undefined) nicks[client.id.toString()] = {};
+          if(nicks[client.id.toString()]["rooms"] == undefined) nicks[client.id.toString()]["rooms"] = [];
+          nicks[client.id.toString()]["rooms"].push(msg.slice(1).join(" "));
+          // broadCast(client, msg.slice(1).join(" "),"/join " + nicks[client.id.toString()]["nick"] + " joined the #" + msg.slice(1).join(" ") + " room");
+          client.join(msg.slice(1).join(" "))
           break;
         case "/msg":
           broadCast(client, msg[1], "/msg " + msg.slice(2).join(" "));
@@ -189,23 +190,24 @@ socket.on("connection", function(client){
         case "/list":
           sendNicksList(client, msg.slice(1).join(" "));
         case "/writing":
-          //broadCast(client, msg[1], "/writing " + client.sessionId);
+          //broadCast(client, msg[1], "/writing " + client.id);
           break;
         case "/pm": 
           try {  
-            client.send_to(msg[1], json({ msg: HTMLEncode("/msg " + msg.slice(2).join(" ")), room: HTMLEncode("/pm"), from: HTMLEncode(client.sessionId), name: HTMLEncode(nicks[client.sessionId]["nick"]), toname: HTMLEncode(nicks[client.sessionId]["nick"]) }));
-            client.send_to(client.sessionId, json({ msg: HTMLEncode("/msg " + msg.slice(2).join(" ")), room: HTMLEncode("/pm"), from: HTMLEncode(client.sessionId), name: HTMLEncode(nicks[msg[1]]["nick"]), to: msg[1], toname: HTMLEncode(nicks[client.sessionId]["nick"]) }));
+            client.send_to(msg[1], json({ msg: HTMLEncode("/msg " + msg.slice(2).join(" ")), room: HTMLEncode("/pm"), from: HTMLEncode(client.id), name: HTMLEncode(nicks[client.id]["nick"]), toname: HTMLEncode(nicks[client.id]["nick"]) }));
+            client.send_to(client.id, json({ msg: HTMLEncode("/msg " + msg.slice(2).join(" ")), room: HTMLEncode("/pm"), from: HTMLEncode(client.id), name: HTMLEncode(nicks[msg[1]]["nick"]), to: msg[1], toname: HTMLEncode(nicks[client.id]["nick"]) }));
           } catch(e) { console.log(e); }
           break;
         case "/leave":
-          var pos = nicks[client.sessionId]["rooms"].indexOf(msg.slice(1).join(" "));        
-          if(pos >= 0) nicks[client.sessionId]["rooms"].splice(pos,1);
+          var pos = nicks[client.id]["rooms"].indexOf(msg.slice(1).join(" "));        
+          if(pos >= 0) nicks[client.id]["rooms"].splice(pos,1);
           sendNicksList(client, msg.slice(1).join(" "));
-          broadCast(client, msg.slice(1).join(" "), "/leave " + client.sessionId);
+          // broadCast(client, msg.slice(1).join(" "), "/leave " + client.id);
+          client.leave(msg.slice(1));
           break;
-        case "/sessionId":
+        case "/id":
           ignore_uniq = true;
-          client.sessionId = msg[1];
+          client.id = msg[1];
           client.send(json({ msg: "/your_id " + msg[1] }));          
           break;
         default: 
@@ -215,5 +217,5 @@ socket.on("connection", function(client){
     } // If allowed
   });
   
-  client.send(json({ msg: "/hello " + client.sessionId }));
+  client.send(json({ msg: "/hello " + client.id }));
 });

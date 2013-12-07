@@ -1,0 +1,14 @@
+{
+  "name": "chatsio",
+  "version": "0.0.1",
+  "dependencies": {
+    "socket.io": "*"
+  },
+  "engines": {
+    "node": ">=0.6"
+  },
+  "subdomain": "chatsio",
+  "domains": [
+    "chats.io"
+  ]
+}

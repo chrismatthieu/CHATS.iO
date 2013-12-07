@@ -22,9 +22,10 @@ if(!/\.(js|html|swf|wav|css|png)$/.test(path)){
 if(room == "") room = "main";
 
  // var socket = new io.Socket(null, {port: 8764, rememberTransport: false});
-var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+// var socket = new io.Socket(null, {port: 80, rememberTransport: false});
+var socket = io.connect('http://localhost');
 
-socket.connect();
+// socket.connect();
 
 socket.on('message', function(message){
   message = JSON.parse(message);
