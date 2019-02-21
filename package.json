@@ -2,10 +2,8 @@
   "name": "chatsio",
   "version": "0.0.1",
   "dependencies": {
-    "socket.io": "*"
-  },
-  "engines": {
-    "node": ">=0.6"
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
   },
   "subdomain": "chatsio",
   "domains": [

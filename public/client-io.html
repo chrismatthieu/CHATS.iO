@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <title>chat</title>
+  	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  	<script src="/js/jquery.cookie.js"></script>
+    <script src="/js/underscore-min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client-io.js"></script>
+  	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/client-io.css">
+  	<link REL="SHORTCUT ICON" HREF="/favicon.ico">
+  	<!-- <script type="text/javascript" src="/thickbox.js"></script>
+  	<link rel="stylesheet" href="/thickbox.css" type="text/css" media="screen" /> -->
+  </head>
+  <body>
+    <div class="help">
+        <span>http://chats.io<em>/<script>document.write (room);</script></em></span> ... or any chatroom name
+    </div>
+
+    <audio id="audio_new_pm" src="/audio/new_pm.mp3" preload="auto"></audio>
+    <audio id="audio_msg" src="/audio/sound.mp3" preload="auto"></audio>
+
+    <div id="rooms"><ul></ul> &nbsp; <p align="right">Chat commands: /nick your_name,  /join a_new_room,  /leave</p></div>
+
+  </body>
+</html>
